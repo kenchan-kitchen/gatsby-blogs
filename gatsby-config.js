@@ -9,10 +9,10 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Kenchan Kitchen`,
     author: {
       name: `Kenchan`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      summary: `who likes cooking and building something.`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
     siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
