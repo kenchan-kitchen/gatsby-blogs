@@ -12,10 +12,14 @@ module.exports = {
     title: `Kenchan Kitchen`,
     author: {
       name: `Kenchan`,
-      summary: `who likes cooking and building something.`,
+      summary: `料理と作ることと色々なものを作ることが好きです。`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `料理を作ることと色々なものを作ることが好きなKenchanのブログです。色々なことを書いていきます。`,
+    siteUrl: `https://cajun-chicken-kitchen.blogspot.com/`,
+    social: {
+      twitter: `naked_ikon`,
+    },
+
   },
   plugins: [
     `gatsby-plugin-image`,
