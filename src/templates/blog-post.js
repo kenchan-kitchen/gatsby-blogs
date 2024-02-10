@@ -6,7 +6,7 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 // gatsby-plugin-image追加
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-
+import styled from "styled-components"// 追加
 
 const BlogPostTemplate = ({
   data: { previous, next, site, markdownRemark: post },
@@ -18,42 +18,43 @@ const BlogPostTemplate = ({
 
   return (
     <Layout location={location} title={siteTitle}>
-      <article
+      <Article
         className="blog-post"
         itemScope
         itemType="http://schema.org/Article"
       >
         <header>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
+          <div className="keyvisual">
           <GatsbyImage
           image={getImage(eyeCatchImg)}
           alt={post.frontmatter.title}
           key={post.frontmatter.title}
         />
-          <p><time datetime={post.frontmatter.date}>{post.frontmatter.date}</time></p>
+        </div>
+          <p className="date">更新日：<time datetime={post.frontmatter.date}>{post.frontmatter.date}</time></p>
         </header>
             {/* カテゴリ追加 */}
-    <dl>
+    <Dl>
       <dt>カテゴリ</dt>
       <dd>{cate}</dd>
-    </dl>
+    </Dl>
         {/* タグ追加 */}
-        <dl>
+    <Dl>
       <dt>タグ</dt>
       {tags.map((tag, index) => {
         return <dd key={`tag${index}`}>{tag}</dd>
       })}
-    </dl>
-        <section
+    </Dl>
+        <BlogEntry
           dangerouslySetInnerHTML={{ __html: post.html }}
           itemProp="articleBody"
         />
-        <hr />
         <footer>
           <Bio />
         </footer>
-      </article>
-      <nav className="blog-post-nav">
+      </Article>
+      <BlogPostNav>
         <ul
           style={{
             display: `flex`,
@@ -78,7 +79,7 @@ const BlogPostTemplate = ({
             )}
           </li>
         </ul>
-      </nav>
+      </BlogPostNav>
     </Layout>
   )
 }
@@ -93,13 +94,62 @@ export const Head = ({ data: { markdownRemark: post } }) => {
 }
 
 export default BlogPostTemplate
+const Article = styled.article`
+  max-width: 750px;
+  margin: 0 auto;
 
+  .date {
+    font-weight: 700;
+
+    time {
+      font-size: 1.4rem;
+    }
+  }
+
+  .keyvisual {
+    text-align: center;
+  }
+`
+const BlogEntry = styled.section`
+  margin: 15px 0 30px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+`
+const BlogPostNav = styled.nav`
+  max-width: 750px;
+  margin: 0 auto;
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+  }
+`
+const Dl = styled.dl`
+  display: flex;
+  margin: 0;
+
+  dt {
+    width: 80px;
+    font-weight: 700;
+  }
+
+  dd {
+    font-size: 14px;
+    margin-left: 0;
+    padding-left: 0;
+
+    & + dd {
+      margin-left: 15px;
+      margin-bottom: 5px;
+    }
+  }
+`
 export const pageQuery = graphql`
   query BlogPostBySlug(
     $id: String!
     $previousPostId: String
     $nextPostId: String
-    # ↓追加
     $hero: String
   ) {
     site {
@@ -107,12 +157,9 @@ export const pageQuery = graphql`
         title
       }
     }
-    # ↓追加
 allFile(
   filter: {
-    # ↓ 画像パスが$heroと一緒のファイルを探す
     relativePath: { eq: $hero }
-    # ↓ 画像を格納してある場所がimages（gatsby-config.jsで指定した名）
     sourceInstanceName: { eq: "images" }
   }
 ) {
@@ -129,7 +176,6 @@ allFile(
     }
   }
 }
-# ↑追加
     markdownRemark(id: { eq: $id }) {
       id
       excerpt(pruneLength: 160)
