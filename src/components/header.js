@@ -8,7 +8,6 @@ const Header = ({ location }) => {
     const rootPath = `${__PATH_PREFIX__}/`
     const isRootPath = location.pathname === rootPath
     let siteName
-  
     //トップページ以外はトップへのリンク
     if (isRootPath) {
       siteName = <h1>{siteMetadata.title}</h1>
@@ -19,7 +18,24 @@ const Header = ({ location }) => {
         </p>
       )
     }
-    return <header>{siteName}</header>
+    return (
+        <header>
+          {siteName}
+          <nav>
+            <ul>
+              <li>
+                <Link to="/blogs/">ブログ</Link>
+              </li>
+              <li>
+                <Link to="/about/">About Me</Link>
+              </li>
+              <li>
+                <Link to="/contact/">Contact</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
+      )    
   }
   export default Header
   
