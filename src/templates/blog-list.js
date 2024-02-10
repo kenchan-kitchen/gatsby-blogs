@@ -8,6 +8,7 @@ import Seo from "../components/seo"
 const BlogList = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.nodes
+  console.log(data.allMarkdownRemark.totalCount) //デバッグ
 
   if (posts.length === 0) {
     return (
@@ -77,7 +78,11 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    allMarkdownRemark(
+      sort: { fields : [frontmatter___date], order:DESC }
+      filter:{frontmatter:{pagetype:{eq:"blog"}}}
+     ) {
+      total Count
       nodes {
         excerpt
         fields {
@@ -87,6 +92,7 @@ export const pageQuery = graphql`
           date(formatString: "MMMM DD, YYYY")
           title
           description
+          hero
         }
       }
     }
