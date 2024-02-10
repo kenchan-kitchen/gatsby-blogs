@@ -1,8 +1,8 @@
 ---
-title: 記事1
-date: 2021-11-26
+title: 記事2
+date: 2021-12-22
 pagetype: blog
-hero: thumbnail/main-visual.png
+hero: thumbnail/eye-catch.png
 description: この記事はテスト投稿です
 cate: web-developer
 tags: ['Gatsby', 'React']
