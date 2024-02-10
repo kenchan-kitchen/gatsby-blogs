@@ -8,6 +8,7 @@
 import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faTwitter,
@@ -81,7 +82,7 @@ const Sns = styled.ul`
         className="bio-avatar"
         layout="fixed"
         formats={["auto", "webp", "avif"]}
-        src="../images/cute-neko.JPG"
+        src="../images/common/cute-neko.JPG"
         width={100}
         height={100}
         quality={95}
@@ -93,19 +94,16 @@ const Sns = styled.ul`
           <strong>{author.name}</strong>/{author?.summary || null}
           {` `}
         </p>
-        <ul>
+        <Sns>
           <li>
             <a href={`https://twitter.com/${social?.twitter || ``}`} target="_blank" rel="noopener" className="tw">
             <FontAwesomeIcon icon={faTwitter} />Twitter</a>
           </li>
-        </ul>
+        </Sns>
         </>
       )}
     </BioWrapper>
   ) 
-
-
-
 }
 
 export default Bio
