@@ -54,7 +54,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // filterでpagetypeがblogのものだけ抽出
   const blogPosts = posts.filter(post => post.frontmatter.pagetype === "blog")
 
-    posts.forEach((post, index) => {
+    blogPosts.forEach((post, index) => {
     //書き換える
     const previousPostId = index === 0 ? null : blogPosts[index - 1].id
     const nextPostId = index === blogPosts.length - 1 ? null : blogPosts[index + 1].id
@@ -70,6 +70,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         hero: post.frontmatter.hero ? post.frontmatter.hero: "common/dummy.png",
         },
       })
+    })
+    // 一覧を出力するコードを追加
+    createPage({
+      path: "/blogs/",
+      component: blogList,
+       context: {},
     })
   }
 }

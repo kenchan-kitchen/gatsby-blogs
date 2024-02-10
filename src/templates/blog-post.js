@@ -8,13 +8,12 @@ import Seo from "../components/seo"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import styled from "styled-components"// 追加
 
-const BlogPostTemplate = ({
-  data: { previous, next, site, markdownRemark: post },
-  location,
-}) => {
-  const siteTitle = site.siteMetadata?.title || `Title`
-  const { cate, tag } = data.markdownRemark.frontmatter//追記
-  console.log(cate, tag)//デバッグ
+const BlogPostTemplate = ({ data, location }) => {
+  const post = data.markdownRemark
+  const siteTitle = data.site.siteMetadata?.title || `Title`
+  const { previous, next } = data
+  const keyVisual = data.allFile.edges[0].node.childImageSharp
+  const { cate, tags } = data.markdownRemark.frontmatter
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -27,7 +26,7 @@ const BlogPostTemplate = ({
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
           <div className="keyvisual">
           <GatsbyImage
-          image={getImage(eyeCatchImg)}
+          image={getImage(keyVisual)}
           alt={post.frontmatter.title}
           key={post.frontmatter.title}
         />
