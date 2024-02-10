@@ -25,6 +25,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           fields {
             slug
           }
+          frontmatter {
+            hero
+            pagetype
+          }
+
         }
       }
     }
@@ -45,9 +50,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // `context` is available in the template as a prop and as a variable in GraphQL
 
   if (posts.length > 0) {
+      // filterでpagetypeがblogのものだけ抽出
+  const blogPosts = posts.filter(post => post.frontmatter.pagetype === "blog")
+
     posts.forEach((post, index) => {
-      const previousPostId = index === 0 ? null : posts[index - 1].id
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
+    //書き換える
+    const previousPostId = index === 0 ? null : blogPosts[index - 1].id
+    const nextPostId = index === blogPosts.length - 1 ? null : blogPosts[index + 1].id
 
       createPage({
         path: post.fields.slug,
@@ -56,6 +65,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id: post.id,
           previousPostId,
           nextPostId,
+                  //↓追記
+        hero: post.frontmatter.hero ? post.frontmatter.hero: "common/dummy.png",
         },
       })
     })
