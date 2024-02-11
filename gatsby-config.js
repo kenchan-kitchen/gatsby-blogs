@@ -19,6 +19,23 @@ module.exports = {
     social: {
       twitter: `naked_ikon`,
     },
+    カテゴリ:[
+      {
+        slug: `technical`,
+        name: `技術記事`,
+        description: `取り止めもない技術記事`,
+      },
+      {
+        slug: `recipe`,
+        name: `レシピ`,
+        description: `これまで作ったレシピ`,
+      },
+      {
+        slug: `diary`,
+        name: `日記`,
+        description: `思ったことを気ままに書いてます`,
+      },
+    ]
 
   },
   plugins: [
