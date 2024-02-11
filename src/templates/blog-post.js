@@ -12,7 +12,8 @@ const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
-  const keyVisual = data.allFile.edges[0].node.childImageSharp
+  const keyVisual = data.allFile.edges.length > 0 ? data.allFile.edges[0].node.childImageSharp : null;
+ //Refuctoring verison in debug between original
   const { cate, tags } = data.markdownRemark.frontmatter
 
   return (
