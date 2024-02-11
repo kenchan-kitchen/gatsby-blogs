@@ -19,7 +19,7 @@ module.exports = {
     social: {
       twitter: `naked_ikon`,
     },
-    カテゴリ:[
+    category:[
       {
         slug: `technical`,
         name: `技術記事`,
