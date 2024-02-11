@@ -91,7 +91,7 @@ export const pageQuery = graphql`
       sort: { fields : [frontmatter___date], order:DESC }
       filter:{frontmatter:{pagetype:{eq:"blog"}}}
      ) {
-      total Count
+      totalCount
       nodes {
         excerpt
         fields {
@@ -102,6 +102,8 @@ export const pageQuery = graphql`
           title
           description
           hero
+          cate
+          tags
         }
       }
     }
