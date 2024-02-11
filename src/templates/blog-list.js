@@ -3,15 +3,17 @@ import { Link, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import Img from "../components/img"
 
 const BlogList = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
-  const posts = data.allMarkdownRemark.nodes
-  console.log(data.allMarkdownRemark.totalCount) //デバッグ
+  const { totalCount, nodes } = data.allMarkdownRemark
+  const posts = nodes
+  const title = "記事一覧"
 
   if (posts.length === 0) {
     return (
-      <Layout location={location} title={siteTitle}>
+      <Layout location={location} title={title}>
+        <Seo title="All posts" />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the
           directory you specified for the "gatsby-source-filesystem" plugin in
@@ -22,8 +24,12 @@ const BlogList = ({ data, location }) => {
   }
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <Bio />
+    <Layout location={location} title={title}>
+      <Seo title="All posts" />
+      <header>
+        <h1>{title}</h1>
+        <p>現在{totalCount} 記事あります</p>       
+      </header>
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.frontmatter.title || post.fields.slug
@@ -35,14 +41,19 @@ const BlogList = ({ data, location }) => {
                 itemScope
                 itemType="http://schema.org/Article"
               >
-                <header>
-                  <h2>
-                    <Link to={post.fields.slug} itemProp="url">
-                      <span itemProp="headline">{title}</span>
-                    </Link>
-                  </h2>
-                  <small>{post.frontmatter.date}</small>
-                </header>
+             <Link to={post.fields.slug} itemProp="url">
+              <Img alt={title} image={post.frontmatter.hero}></Img>
+                <small>
+                  <time datetime={post.frontmatter.date}>
+                    {post.frontmatter.date}
+                  </time>
+                </small>
+                </Link>
+                <h2>
+                <Link to={post.fields.slug} itemProp="url">
+                 <span itemProp="headline">{title}</span>
+                </Link>
+                </h2>
                 <section>
                   <p
                     dangerouslySetInnerHTML={{
