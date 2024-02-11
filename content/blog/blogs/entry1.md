@@ -4,6 +4,6 @@ date: 2021-11-26
 pagetype: blog
 hero: thumbnail/main-visual.png
 description: この記事はテスト投稿です
-cate: web-developer
+cate: diary
 tags: ['Gatsby', 'React']
 ---

@@ -4,6 +4,8 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 // Define the template for blog post
 const blogPost = path.resolve(`./src/templates/blog-post.js`)
 const blogList = path.resolve(`./src/templates/blog-list.js`)//テンプレートとなるページを追加
+const cateList = path.resolve(`./src/templates/cate-list.js`)
+const tagList= path.resolve(`./src/templates/tag-list.js`)
 
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
@@ -26,6 +28,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           frontmatter {
             hero
             pagetype
+            cate
+            tags
           }
 
         }
@@ -72,6 +76,43 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: "/blogs/",
       component: blogList,
        context: {},
+    })
+
+    let cates = posts.reduce((cates, edge) => {
+      const edgeCates = edge.frontmatter.cate
+      return edgeCates ? cates.concat(edgeCates) : cates
+    }, [])
+    // 重複削除
+    cates = [...new Set(cates)]
+    // カテゴリ分ページを作成
+    cates.forEach(cate => {
+      const cateSlug = cate
+      createPage({
+        path: `/blogs/${cate}/`,
+        component: cateList,
+        context: {
+          cateSlug,
+        },
+      })
+    })
+    
+    let tags = posts.reduce((tags, edge) => {
+      const edgeTags = edge.frontmatter.tags
+      return edgeTags ? tags.concat(edgeTags) : tags
+    }, [])
+    // 重複削除
+    tags = [...new Set(tags)]
+    
+    // カテゴリ分ページを作成
+    tags.forEach(item => {
+      const tag = item
+      createPage({
+        path: `/blogs/tags/${item}/`,
+        component: tagList,
+        context: {
+          tag,
+        },
+      })
     })
   }
 }
