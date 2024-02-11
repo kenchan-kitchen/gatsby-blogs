@@ -1,9 +1,3 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/
- */
-
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
@@ -58,7 +52,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const blogPosts = posts.filter(post => post.frontmatter.pagetype === "blog")
 
     blogPosts.forEach((post, index) => {
-    //書き換える
     const previousPostId = index === 0 ? null : blogPosts[index - 1].id
     const nextPostId = index === blogPosts.length - 1 ? null : blogPosts[index + 1].id
 
@@ -69,8 +62,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id: post.id,
           previousPostId,
           nextPostId,
-                  //↓追記
-        hero: post.frontmatter.hero ? post.frontmatter.hero: "common/dummy.png",
+          hero: post.frontmatter.hero 
+          ? post.frontmatter.hero: "common/dummy.png",
         },
       })
     })
